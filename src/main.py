@@ -10,8 +10,32 @@ def reset_public_dir(dest_dir):
 
 
 
+
+
 def copy_tree(src,dest):
-    pass
+    print("SRC: ", src)
+    print("DEST: ", dest)
+
+    src_contents = os.listdir(src)
+    for item in src_contents:
+        item_src_path = os.path.join(src, item)
+        item_dest_path = os.path.join(dest, item)
+
+        print("src: ", item_src_path)
+        print("dest: ", item_dest_path)
+
+        if os.path.isfile(item_src_path):
+            shutil.copyfile(item_src_path, item_dest_path)
+
+        elif os.path.isdir(item_src_path):
+            if not os.path.exists(item_dest_path):
+                os.mkdir(item_dest_path)
+                copy_tree(item_src_path, item_dest_path)
+
+
+
+
+
 
 
 
@@ -32,6 +56,7 @@ if __name__  == '__main__':
     print("public_dir is",folder_path)
 
     reset_public_dir(folder_path)
+    copy_tree(src_static,folder_path)
 
 
 
