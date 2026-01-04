@@ -42,10 +42,11 @@ def text_node_to_html_node(text_node):
 def text_to_textnodes(text):
     from split_delimiter import (split_nodes_delimiter,split_nodes_images,split_nodes_link)
     if text:
-        print(text.split('**'))
+
         nodes = [TextNode(text,TextType.TEXT)]
         nodes =split_nodes_delimiter(nodes,'**',TextType.BOLD)
-        nodes = split_nodes_delimiter(nodes,'_',TextType.ITALIC)
+        nodes = split_nodes_delimiter(nodes,'*',TextType.ITALIC)
+        nodes = split_nodes_delimiter(nodes, '_', TextType.ITALIC)
         nodes = split_nodes_delimiter(nodes, '`', TextType.CODE)
         nodes = split_nodes_images(nodes)
         nodes = split_nodes_link(nodes)
@@ -85,7 +86,7 @@ class TextNode:
 
 
 
-# This is for testing only
+
 
 
 
