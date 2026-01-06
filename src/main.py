@@ -1,6 +1,6 @@
 import os
 import shutil
-
+from gencontent import generate_page,generate_pages_recursive
 
 def reset_public_dir(dest_dir):
     if os.path.exists(dest_dir):
@@ -40,7 +40,6 @@ def copy_tree(src,dest):
 
 
 
-
 if __name__  == '__main__':
     this_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.dirname(this_dir)
@@ -57,6 +56,27 @@ if __name__  == '__main__':
 
     reset_public_dir(folder_path)
     copy_tree(src_static,folder_path)
+
+
+    content_md = os.path.join(root_dir, "content","index.md")
+    template_html = os.path.join(root_dir, "template.html")
+    dest_html = os.path.join(root_dir,"public","index.html")
+
+    """generate_page(
+        content_md,
+        template_html,
+        dest_html,
+    )"""
+
+    content_dir = os.path.join(root_dir, "content")
+    public_dir = os.path.join(root_dir, "public")
+
+
+    generate_pages_recursive(content_dir,template_html,public_dir,content_dir)
+
+
+
+
 
 
 
