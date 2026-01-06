@@ -1,8 +1,9 @@
 import os
 import shutil
+import sys
 from gencontent import generate_page,generate_pages_recursive
 
-def reset_public_dir(dest_dir):
+def reset_docs_dir(dest_dir):
     if os.path.exists(dest_dir):
         shutil.rmtree(dest_dir)
 
@@ -41,26 +42,31 @@ def copy_tree(src,dest):
 
 
 if __name__  == '__main__':
+    arg="/"
+    if len(sys.argv) > 1:
+        arg = sys.argv[1]
+
+
     this_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.dirname(this_dir)
-    # the above two lines help get the directory for public
-    folder_path = os.path.join(root_dir, "public")
+    # the above two lines help get the directory for docs
+    folder_path = os.path.join(root_dir, "docs")
     src_static = os.path.join(root_dir, "static")
     # now need to do the same for static directory
 
 
 
     print("root_dir is",root_dir)
-    print("src_public_static is",src_static)
-    print("public_dir is",folder_path)
+    print("src_docs_static is",src_static)
+    print("docs_dir is",folder_path)
 
-    reset_public_dir(folder_path)
+    reset_docs_dir(folder_path)
     copy_tree(src_static,folder_path)
 
 
     content_md = os.path.join(root_dir, "content","index.md")
     template_html = os.path.join(root_dir, "template.html")
-    dest_html = os.path.join(root_dir,"public","index.html")
+    dest_html = os.path.join(root_dir,"docs","index.html")
 
     """generate_page(
         content_md,
@@ -69,10 +75,10 @@ if __name__  == '__main__':
     )"""
 
     content_dir = os.path.join(root_dir, "content")
-    public_dir = os.path.join(root_dir, "public")
+    docs_dir = os.path.join(root_dir, "docs")
 
 
-    generate_pages_recursive(content_dir,template_html,public_dir,content_dir)
+    generate_pages_recursive(content_dir,template_html,docs_dir,content_dir,arg)
 
 
 
